@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ SYSTEM LOCKED ⚠️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000, #1a0000, #000000);
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+        }
+        
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        .lock-screen {
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #ff0000;
+            border-radius: 20px;
+            padding: 40px;
+            width: 600px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.5); }
+            50% { box-shadow: 0 0 100px rgba(255, 0, 0, 1); }
+            100% { box-shadow: 0 0 50px rgba(255, 0, 0, 0.5); }
+        }
+        
+        .skull {
+            font-size: 100px;
+            color: #ff0000;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+        
+        h1 {
+            color: #ff0000;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        
+        .warning {
+            color: #ff6600;
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .code-input {
+            margin: 30px 0;
+        }
+        
+        input {
+            width: 200px;
+            padding: 15px;
+            font-size: 24px;
+            text-align: center;
+            background: #111;
+            border: 2px solid #ff0000;
+            color: #00ff00;
+            border-radius: 10px;
+            outline: none;
+            font-family: monospace;
+        }
+        
+        input:focus {
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff0000, #990000);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            border: 1px solid #ff6666;
+        }
+        
+        button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #ff3300, #cc0000);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+        }
+        
+        .counter {
+            color: #00ff00;
+            font-size: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+        
+        .hint {
+            color: #666;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            z-index: 9998;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+    
+    <div class="container">
+        <div class="lock-screen">
+            <div class="skull">💀⚠️💀</div>
+            <h1>SYSTEM TERKUNCI!</h1>
+            <div class="warning">
+                ⚠️ PERINGATAN EKSTRIM ⚠️<br><br>
+                Lu sekarang dalam mode TERKUNCI TOTAL!<br>
+                Tombol apapun GA BERGUNA!<br>
+                Mau pindah tab? GA BISA! Mau close? IMPOSSIBLE!<br>
+                <span style="color: #ff0000; font-size: 24px;">🔥 SOLUSINYA CUMA SATU 🔥</span>
+            </div>
+            
+            <div class="counter" id="counter">
+                Kesempatan percobaan: 3x
+            </div>
+            
+            <div class="code-input">
+                <input type="text" id="unlock_code" maxlength="6" placeholder="******">
+            </div>
+            
+            <button onclick="checkCode()" id="unlockBtn">🔓 UNLOCK SYSTEM</button>
+            
+            <div class="hint">
+                (PS: Kode 6 digit cuma yang punya prank yang tau)
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== BLOCKER SUPER KEJAM ====================
+
+        // SET KODE UNLOCK DISINI! (GANTI ANGKA NYA)
+        const correctCode = '123456'; // <<< GANTI 123456 DENGAN KODE LU!
+
+        // Variable buat track percobaan
+        let attempts = 3;
+
+        // 1. BLOCK SEMUA TOMBOL KEYBOARD
+        document.addEventListener('keydown', function(e) {
+            // Block ALT, CTRL, dll
+            if (e.altKey || e.ctrlKey || e.metaKey || e.key === 'Escape' || e.key === 'F4' || e.key === 'Tab') {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            
+            // Block F1 - F12
+            if (e.keyCode >= 112 && e.keyCode <= 123) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Windows Key
+            if (e.keyCode === 91 || e.keyCode === 92) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+W (close tab)
+            if (e.ctrlKey && e.keyCode === 87) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+R (refresh)
+            if (e.ctrlKey && e.keyCode === 82) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block F5 (refresh)
+            if (e.keyCode === 116) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Block Ctrl+T (new tab)
+            if (e.ctrlKey && e.keyCode === 84) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 2. BLOCK KLIK KANAN
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 3. BLOCK SELECTION
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 4. BLOCK DRAG
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 5. EFEK GETER
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-10px); }
+                75% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 6. BLOCK CLOSE TAB
+        window.onbeforeunload = function() {
+            return "⚠️ MAU KEMANA?! GA BISA KELUAR SEBELUM UNLOCK! ⚠️";
+        };
+
+        // 7. BLOCK HISTORY BACK
+        history.pushState(null, null, location.href);
+        window.onpopstate = function() {
+            history.go(1);
+        };
+
+        // 8. AUTO FULLSCREEN
+        function requestFullScreen() {
+            if (!document.fullscreenElement) {
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            }
+        }
+        setInterval(requestFullScreen, 1000);
+
+        // 9. INPUT HANYA ANGKA
+        document.getElementById('unlock_code').addEventListener('keydown', function(e) {
+            if (!((e.keyCode >= 48 && e.keyCode <= 57) || 
+                  (e.keyCode >= 96 && e.keyCode <= 105) || 
+                  e.keyCode === 8 || e.keyCode === 46)) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 10. FUNGSI CEK KODE
+        function checkCode() {
+            const inputCode = document.getElementById('unlock_code').value;
+            
+            if (inputCode === correctCode) {
+                // UNLOCK BERHASIL!
+                document.body.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #00ff00, #006600); height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; color: white; font-family: Arial;">
+                        <div style="font-size: 100px;">🎉🔓🎉</div>
+                        <h1 style="font-size: 48px; margin: 20px;">UNLOCK SUCCESS!</h1>
+                        <p style="font-size: 24px;">Selamat! Lu berhasil keluar!</p>
+                        <p style="font-size: 18px; margin-top: 30px;">Ini cuma prank ya! 😂</p>
+                        <button onclick="window.close()" style="padding: 15px 30px; font-size: 18px; margin-top: 20px; cursor: pointer;">Close Tab</button>
+                    </div>
+                `;
+                window.onbeforeunload = null;
+            } else {
+                attempts--;
+                
+                if (attempts <= 0) {
+                    document.body.innerHTML = `
+                        <div style="background: black; height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; color: red; font-family: Arial;">
+                            <div style="font-size: 150px; animation: spin 2s infinite linear;">💀</div>
+                            <h1 style="font-size: 48px; animation: blink 1s infinite;">TOO MANY ATTEMPTS!</h1>
+                            <p style="font-size: 24px; color: #ff6666;">Coba lagi nanti gan!</p>
+                        </div>
+                        <style>
+                            @keyframes spin { 100% { transform: rotate(360deg); } }
+                            @keyframes blink { 50% { opacity: 0; } }
+                        </style>
+                    `;
+                } else {
+                    alert(`❌ SALAH! Kesempatan tersisa: ${attempts}x`);
+                    document.getElementById('counter').innerHTML = `Kesempatan percobaan: ${attempts}x`;
+                    
+                    document.querySelector('.lock-screen').style.animation = 'shake 0.1s ease-in-out 3';
+                    setTimeout(() => {
+                        document.querySelector('.lock-screen').style.animation = 'pulse 2s infinite';
+                    }, 300);
+                }
+            }
+            document.getElementById('unlock_code').value = '';
+        }
+
+        // 11. AUTO FOCUS
+        document.getElementById('unlock_code').focus();
+
+        // 12. TAMPILIN KODE DI CONSOLE
+        console.log('%c🔐 UNLOCK CODE: ' + correctCode, 'font-size: 20px; background: black; color: green; padding: 10px;');
+
+        // 13. FORCE FOCUS
+        window.addEventListener('blur', function() {
+            setTimeout(function() {
+                window.focus();
+                requestFullScreen();
+            }, 10);
+        });
+
+        // 14. LOOP PENGAMAN
+        setInterval(function() {
+            window.focus();
+            if (!document.fullscreenElement) {
+                requestFullScreen();
+            }
+        }, 100);
+    </script>
+</body>
+</html>
